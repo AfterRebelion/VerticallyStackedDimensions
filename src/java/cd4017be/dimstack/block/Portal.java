@@ -231,7 +231,7 @@ public class Portal extends BaseBlock {
 
 		if (player.isCreative()) {
 			if (!block.removedByPlayer(state, world, pos, player, false)) return;
-			block.onBlockDestroyedByPlayer(world, pos, state);
+			block.breakBlock(world, pos, state);
 		} else {
 			ItemStack itemstack2 = stack.isEmpty() ? ItemStack.EMPTY : stack.copy();
 			boolean flag = state.getBlock().canHarvestBlock(world, pos, player);
@@ -240,7 +240,7 @@ public class Portal extends BaseBlock {
 				if (stack.isEmpty()) net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(player, itemstack2, EnumHand.MAIN_HAND);
 			}
 			if (!block.removedByPlayer(state, world, pos, player, flag)) return;
-			block.onBlockDestroyedByPlayer(world, pos, state);
+			block.breakBlock(world, pos, state);
 			if (flag)
 				block.harvestBlock(world, player, pos, state, tileentity, itemstack2);
 			// Drop experience
@@ -253,12 +253,12 @@ public class Portal extends BaseBlock {
 
 	private static void fixSync(DimPos pos, IBlockState old) {
 		WorldServer world = pos.getWorldServer();
-		if (!world.getChunkFromBlockCoords(pos).isPopulated())
+		if (!world.getChunk(pos).isPopulated())
 			PortalConfiguration.get(pos.dimId).notifyBlockUpdate(world, pos, old, pos.getBlock(), 3);
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 		if (world instanceof WorldServer && !state.getValue(solidOther1)) {
 			AxisAlignedBB box = entity.getEntityBoundingBox();
 			if (box.maxY - box.minY > 1.0 && state.getValue(solidOther2)) return;
@@ -451,10 +451,12 @@ public class Portal extends BaseBlock {
 		return state.getValue(solidOther1);
 	}
 
+	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return state.getValue(solidOther1);
 	}
 
+	@Override
 	public boolean isFullCube(IBlockState state) {
 		return state.getValue(solidOther1);
 	}
@@ -471,7 +473,7 @@ public class Portal extends BaseBlock {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
 

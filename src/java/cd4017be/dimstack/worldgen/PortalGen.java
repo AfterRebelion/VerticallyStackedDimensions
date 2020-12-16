@@ -36,7 +36,7 @@ public class PortalGen implements IWorldGenerator {
 	@Override
 	public void generate(Random random, int cx, int cz, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
 		PortalConfiguration pc = PortalConfiguration.get(world), pc1;
-		Chunk chunk = world.getChunkFromChunkCoords(cx, cz);
+		Chunk chunk = world.getChunk(cx, cz);
 		if ((pc1 = pc.nextFloor()) != null)
 			placePortals(chunk, 0, false, pc1, pc.flipped ^ pc1.flipped ? 0 : pc1.ceilY);
 		if ((pc1 = pc.nextCeil()) != null) {

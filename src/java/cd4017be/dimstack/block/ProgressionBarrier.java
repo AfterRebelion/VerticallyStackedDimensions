@@ -49,7 +49,7 @@ public class ProgressionBarrier extends BaseBlock implements IOperand {
 
 	@Override
 	public void addInformation(ItemStack stack, World player, List<String> list, ITooltipFlag advanced) {
-		String name = getUnlocalizedName();
+		String name = getTranslationKey();
 		list.add(translate(name + ".tools"));
 		int i = stack.getMetadata();
 		ItemStack[] tools = requiredTools[i];

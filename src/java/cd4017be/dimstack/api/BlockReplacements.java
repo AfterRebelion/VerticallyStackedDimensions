@@ -69,7 +69,7 @@ public class BlockReplacements implements IDimensionSettings {
 		}
 
 		public void doReplace(World world, int cx, int cz) {
-			Chunk chunk = world.getChunkFromChunkCoords(cx, cz);
+			Chunk chunk = world.getChunk(cx, cz);
 			MutableBlockPos pos = new MutableBlockPos();
 			BlockPredicate target = this.target;
 			IBlockState repl = this.repl;

@@ -162,7 +162,7 @@ public class Dimensionstack extends API implements IRecipeHandler {
 		for (IDimensionSettings s : sp.getAllSettings()) {
 			if (client && !s.isClientRelevant()) continue;
 			NBTBase tag = s.serializeNBT();
-			if (tag != null && !tag.hasNoTags())
+			if (tag != null && !tag.isEmpty())
 				cfg.setTag(s.getClass().getName(), tag);
 		}
 		return cfg;
@@ -186,7 +186,7 @@ public class Dimensionstack extends API implements IRecipeHandler {
 			try {
 				SettingProvider sp = key.equals("global") ? INSTANCE : get(Integer.parseInt(key));
 				NBTTagCompound cfg = nbt.getCompoundTag(key);
-				if (!cfg.hasNoTags())
+				if (!cfg.isEmpty())
 					loadSettings(sp, cfg);
 			} catch(NumberFormatException e) {}
 		cfgModified = false;
@@ -198,11 +198,11 @@ public class Dimensionstack extends API implements IRecipeHandler {
 	 */
 	public static void save(NBTTagCompound nbt, boolean client) {
 		NBTTagCompound cfg = saveSettings(INSTANCE, client);
-		if (!cfg.hasNoTags())
+		if (!cfg.isEmpty())
 			nbt.setTag("global", cfg);
 		IntArrayList open = new IntArrayList();
 		for (PortalConfiguration pc : dimensions.values()) {
-			if (!(cfg = saveSettings(pc, client)).hasNoTags())
+			if (!(cfg = saveSettings(pc, client)).isEmpty())
 				nbt.setTag(Integer.toString(pc.dimId), cfg);
 			if (pc.topOpen) open.add(pc.dimId);
 		}

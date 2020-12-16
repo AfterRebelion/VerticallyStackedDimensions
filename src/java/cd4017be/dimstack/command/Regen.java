@@ -87,7 +87,7 @@ public class Regen extends CommandBase implements ITickReceiver {
 		int i = 1;
 		if (args[i].equals("loaded")) {
 			i++;
-			long[] a = ((WorldServer)world).getChunkProvider().id2ChunkMap.keySet().toLongArray();
+			long[] a = ((WorldServer)world).getChunkProvider().loadedChunks.keySet().toLongArray();
 			total = a.length;
 			chunks = LongIterators.wrap(a);
 		} else if (args.length < 6) throw new WrongUsageException("commands.blockrepl.usage");

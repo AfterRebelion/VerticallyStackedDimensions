@@ -71,8 +71,8 @@ public class AutoCompletion<T> extends Thread {
 					}
 					i = INT_CHECK;
 				}
-				if(!id.getResourceDomain().equals(domain)) continue;
-				if(!id.getResourcePath().startsWith(path)) continue;
+				if(!id.getNamespace().equals(domain)) continue;
+				if(!id.getPath().startsWith(path)) continue;
 				results[n++] = addExtension(id);
 				if(n == results.length) break;
 			}
